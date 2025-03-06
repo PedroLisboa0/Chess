@@ -63,6 +63,7 @@ class Game:
     def get_moves(self, piece, squares):
         square_index = 0
         self.possible_moves = []
+        directions = piece.directions
 
         # Finds the index of the square in the flat list, so it can calculate legal moves.
         for square in squares:
@@ -78,7 +79,7 @@ class Game:
             if piece.already_moved:
                 piece.range = 1
 
-        for direction in piece.directions:
+        for direction in directions:
             enemy_piece_blocking = False
             directional_counter += 1
             for i in range(piece.range):
@@ -112,7 +113,7 @@ class Game:
                         else:
                             if possible_square.x == current_square.x or possible_square.y == current_square.y:
                                 self.possible_moves.append(possible_square)
-                    # Makes sure the knight nor the pawn wraps around.
+                    # Makes sure the knight doesn't wrap around.
                     elif piece.type == "knight":
                         if -3 < (possible_square.x - piece.x) < 3:
                             self.possible_moves.append(possible_square)
@@ -125,6 +126,7 @@ class Game:
                             else:
                                 if possible_square.piece_on is not None:
                                     self.possible_moves.append(possible_square)
+                                piece.capture_moves.append(possible_square)
 
                     # Fixes bishop's movements
                     elif piece.type == "bishop":

@@ -141,7 +141,10 @@ class Board:
     def get_color_moves(self, color):
         enemy_moves = []
         for enemy_piece in self.get_color_pieces(color):
-            for move in enemy_piece.moves:
+            piece_moves = enemy_piece.moves
+            if enemy_piece == "pawn":
+                piece_moves = enemy_piece.capture_moves
+            for move in piece_moves:
                 if move not in enemy_moves:
                     enemy_moves.append(move)
         return enemy_moves
@@ -171,3 +174,4 @@ class Square:
 
         # Pygame rect to render the square
         self.rect = pygame.Rect(x * square_size, y * square_size, square_size, square_size)
+

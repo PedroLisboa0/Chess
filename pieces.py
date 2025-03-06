@@ -28,6 +28,7 @@ class Pawn(Piece):
         super().__init__(x, y, color)
         self.type = "pawn"
         self.range = 2
+        self.capture_moves = []
         match self.color:
             case "white":
                 self.surf = sprites.white_pawn

@@ -35,7 +35,10 @@ def update_legal_moves():
         if piece.type == "king":
             enemy_color = get_enemy_color(piece.color)
             enemy_moves = board.get_color_moves(enemy_color)
-            for move in piece.moves:
+            piece_moves = piece.moves
+            if piece.type == "pawn":
+                piece_moves = piece.capture_moves
+            for move in piece_moves:
                 if move in enemy_moves:
                     piece.moves.remove(move)
 
