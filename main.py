@@ -31,16 +31,8 @@ def update_legal_moves():
     for piece in board.all_pieces:
         game.get_moves(piece=piece, squares=board.get_squares())
     # Limits the king so it cannot enter check
-    for piece in board.all_pieces:
-        if piece.type == "king":
-            enemy_color = get_enemy_color(piece.color)
-            enemy_moves = board.get_color_moves(enemy_color)
-            piece_moves = piece.moves
-            if piece.type == "pawn":
-                piece_moves = piece.capture_moves
-            for move in piece_moves:
-                if move in enemy_moves:
-                    piece.moves.remove(move)
+    # TODO vou ter que fazer uma "simulação" da posição caso tal lance aconteça mesmo. Acho inclusive que o melhor
+    # TODO é fazer um novo arquivo e classe Simulator
 
 
 update_legal_moves()
