@@ -141,3 +141,6 @@ class Game:
                     else:
                         self.possible_moves.append(possible_square)
         piece.moves = self.possible_moves
+
+    def simulate_position(self):
+        pass
