@@ -1,11 +1,6 @@
 import sprites
 
 
-# At this point, I'm not sure either I make a Piece class, and a dictionary with all the pieces movements or a class
-# for each piece. I'm not sure how I would implement the knight in a generic Piece class, so I probably will go with
-# the second option
-
-
 class Piece:
     def __init__(self, x, y, color):
         self.x = x

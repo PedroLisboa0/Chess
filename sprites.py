@@ -1,5 +1,7 @@
 import pygame
 
+# Loads all the sprites for the pieces.
+
 pygame.init()
 white_pawn = pygame.image.load("pieces_sprites/white-pawn.png")
 white_rook = pygame.image.load("pieces_sprites/white-rook.png")

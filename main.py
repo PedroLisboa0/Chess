@@ -8,7 +8,7 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 800
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Xadrezinho pq o homi não é de ferro")
+pygame.display.set_caption("Chess by Pedro Lisboa")
 
 clock = pygame.time.Clock()
 running = True

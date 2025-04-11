@@ -128,12 +128,12 @@ class Game:
                                     self.possible_moves.append(possible_square)
                                 piece.capture_moves.append(possible_square)
 
-                    # Fixes bishop's movements
+                    # Limits bishop's movements.
                     elif piece.type == "bishop":
                         bishop_moves = get_bishop_moves(current_square=current_square, possible_square=possible_square)
                         self.possible_moves.extend(bishop_moves)
 
-                    # Fixes the rook
+                    # Limits the rook.
                     elif piece.type == "rook":
                         rook_moves = get_rook_moves(current_square=current_square, possible_square=possible_square)
                         self.possible_moves.extend(rook_moves)

@@ -1,7 +1,6 @@
 import pygame
 from pieces import Rook, Knight, Bishop, King, Queen, Pawn
 
-# TODO make a FEN interpreter
 starting_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 
 high_white = (250, 172, 211)
@@ -15,7 +14,6 @@ high_white_squares = high_white
 high_black_squares = high_purple
 
 
-# TODO make a material calculator method on the Board object
 class Board:
     def __init__(self):
         self.square_len = 100
