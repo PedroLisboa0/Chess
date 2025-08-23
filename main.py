@@ -17,7 +17,7 @@ board_setup = None
 
 board = Board()
 board.create_squares()
-board.create_pieces(fen=board_setup)
+board.create_pieces(board_setup)
 board.update_squares()
 
 game = Game()

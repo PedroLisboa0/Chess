@@ -1,7 +1,6 @@
 import pygame
+import math
 from pieces import Rook, Knight, Bishop, King, Queen, Pawn
-
-starting_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 
 high_white = (250, 172, 211)
 high_purple = (87, 9, 105)
@@ -13,10 +12,28 @@ black_squares_color = purple
 high_white_squares = high_white
 high_black_squares = high_purple
 
+def format_FEN(FEN): # Transforms FEN notation into a nested list, adding a 0 for empty squares.
+
+    FEN_rows = ""
+
+    for char in FEN:
+        if char.isdigit():
+            for i in range(int(char)):
+                FEN_rows += "0"
+        else:
+            FEN_rows += char
+
+    FEN_rows = FEN_rows.split("/")
+    new_FEN = [list(row) for row in FEN_rows]
+
+    return new_FEN
+
+
 
 class Board:
     def __init__(self):
         self.square_len = 100
+        self.starting_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
         self.squares = []
         self.flat_squares = []
         self.all_pieces = []
@@ -43,14 +60,37 @@ class Board:
         for piece in self.all_pieces:
             piece.surf = pygame.transform.scale(piece.surf, (self.square_len, self.square_len))
 
-    def create_pieces(self, fen=None):
-        if fen is None:
-            self.create_rooks()
-            self.create_knights()
-            self.create_bishops()
-            self.create_kings()
-            self.create_queens()
-            self.create_pawns()
+    def create_pieces(self, position):
+        if position == None:
+            position = self.starting_position
+        FEN = format_FEN(position)
+
+        for y, row in enumerate(FEN):
+            for x, char in enumerate(row):
+                if char == "0":
+                    pass
+                
+                if char.islower():
+                    color = "black"
+                else:
+                    color = "white"
+
+                match char.lower():
+                    case "r":
+                        piece = Rook(x, y, color)
+                    case "n":
+                        piece = Knight(x, y, color)
+                    case "b":
+                        piece = Bishop(x, y, color)
+                    case "q":
+                        piece = Queen(x, y, color)
+                    case "k":
+                        piece = King(x, y, color)
+                    case "p":
+                        piece = Pawn(x, y, color)
+
+                self.all_pieces.append(piece)
+
         self.scale_sprites()
 
         for piece in self.all_pieces:
@@ -65,7 +105,7 @@ class Board:
             for i in range(0, 8, 7):
                 if player == 0:
                     rook = Rook(x=i, y=0, color="black")
-                else:
+                else: 
                     rook = Rook(x=i, y=7, color="white")
                 self.all_pieces.append(rook)
 
