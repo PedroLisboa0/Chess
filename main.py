@@ -1,6 +1,6 @@
 import pygame
 from board import Board
-from game import Game, check_capture, change_turn, get_enemy_color
+from game import Game, check_capture, change_turn
 
 pygame.init()
 
@@ -13,7 +13,8 @@ pygame.display.set_caption("Chess by Pedro Lisboa")
 clock = pygame.time.Clock()
 running = True
 
-board_setup = None
+starting_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+board_setup = starting_position
 
 board = Board()
 board.create_squares()

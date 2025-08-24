@@ -4,10 +4,8 @@ def check_capture(new_square, pieces, white_pieces, black_pieces):
             pieces.remove(piece)
             new_square.piece_on = None
             match piece.color:
-                case "white":
-                    white_pieces.remove(piece)
-                case "black":
-                    black_pieces.remove(piece)
+                case "white": white_pieces.remove(piece)
+                case "black": black_pieces.remove(piece)
 
 
 def change_turn(current_turn):

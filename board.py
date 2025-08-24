@@ -28,12 +28,9 @@ def format_FEN(FEN): # Transforms FEN notation into a nested list, adding a 0 fo
 
     return new_FEN
 
-
-
 class Board:
     def __init__(self):
         self.square_len = 100
-        self.starting_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
         self.squares = []
         self.flat_squares = []
         self.all_pieces = []
@@ -61,8 +58,6 @@ class Board:
             piece.surf = pygame.transform.scale(piece.surf, (self.square_len, self.square_len))
 
     def create_pieces(self, position):
-        if position == None:
-            position = self.starting_position
         FEN = format_FEN(position)
 
         for y, row in enumerate(FEN):
@@ -89,68 +84,13 @@ class Board:
                     case "p":
                         piece = Pawn(x, y, color)
 
+                match piece.color:
+                    case "white": self.white_pieces.append(piece)
+                    case "black": self.black_pieces.append(piece)
+
                 self.all_pieces.append(piece)
 
         self.scale_sprites()
-
-        for piece in self.all_pieces:
-            match piece.color:
-                case "white":
-                    self.white_pieces.append(piece)
-                case "black":
-                    self.black_pieces.append(piece)
-
-    def create_rooks(self):
-        for player in range(2):
-            for i in range(0, 8, 7):
-                if player == 0:
-                    rook = Rook(x=i, y=0, color="black")
-                else: 
-                    rook = Rook(x=i, y=7, color="white")
-                self.all_pieces.append(rook)
-
-    def create_knights(self):
-        for player in range(2):
-            for i in range(1, 7, 5):
-                if player == 0:
-                    knight = Knight(x=i, y=0, color="black")
-                else:
-                    knight = Knight(x=i, y=7, color="white")
-                self.all_pieces.append(knight)
-
-    def create_bishops(self):
-        for player in range(2):
-            for i in range(2, 6, 3):
-                if player == 0:
-                    bishop = Bishop(x=i, y=0, color="black")
-                else:
-                    bishop = Bishop(x=i, y=7, color="white")
-                self.all_pieces.append(bishop)
-
-    def create_kings(self):
-        for i in range(2):
-            if i == 0:
-                king = King(x=4, y=0, color="black")
-            else:
-                king = King(x=4, y=7, color="white")
-            self.all_pieces.append(king)
-
-    def create_queens(self):
-        for i in range(2):
-            if i == 0:
-                queen = Queen(x=3, y=0, color="black")
-            else:
-                queen = Queen(x=3, y=7, color="white")
-            self.all_pieces.append(queen)
-
-    def create_pawns(self):
-        for player in range(2):
-            for i in range(8):
-                if player == 0:
-                    pawn = Pawn(x=i, y=1, color="black")
-                else:
-                    pawn = Pawn(x=i, y=6, color="white")
-                self.all_pieces.append(pawn)
 
     def update_squares(self):
         remaining_pieces = self.all_pieces
