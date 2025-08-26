@@ -8,5 +8,5 @@ research during the development to maximize the learning i could have by trying 
 # To do #
 - Add an AI to play against.
 - Add a material calculator.
-- Add a FEN interpreter.
+- ~Add a FEN interpreter.~
 - Save the history of previous games.
