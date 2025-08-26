@@ -1,5 +1,4 @@
 import pygame
-import math
 from pieces import Rook, Knight, Bishop, King, Queen, Pawn
 
 high_white = (250, 172, 211)
@@ -27,6 +26,8 @@ def format_FEN(FEN): # Transforms FEN notation into a nested list, adding a 0 fo
     new_FEN = [list(row) for row in FEN_rows]
 
     return new_FEN
+
+#TODO Criar um codificador FEN 
 
 class Board:
     def __init__(self):

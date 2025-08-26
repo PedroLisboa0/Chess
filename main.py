@@ -1,6 +1,7 @@
 import pygame
 from board import Board
 from game import Game, check_capture, change_turn
+from saver import Saver
 
 pygame.init()
 
@@ -27,6 +28,7 @@ selected_square = None
 mode = "select"
 turn = "white"
 
+saver = Saver(file="games.txt")
 
 def update_legal_moves():
     for piece in board.all_pieces:
@@ -46,8 +48,7 @@ while running:
         # Moves the pieces (or tries to lol)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_position = pygame.mouse.get_pos()
-            # For some reason, I have to loop through all the 8 lists in boards.squares, it doesn't work properly
-            # if I loop through the flat list.
+
             for row in board.squares:
                 for square in row:
 
@@ -73,7 +74,7 @@ while running:
                         update_legal_moves()
                         mode = "select"
 
-    # Render the board
+    # Renders the board
     board.draw_board(screen=screen)
 
     # Renders the pieces
