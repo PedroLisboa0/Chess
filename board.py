@@ -27,7 +27,21 @@ def format_FEN(FEN): # Transforms FEN notation into a nested list, adding a 0 fo
 
     return new_FEN
 
-#TODO Criar um codificador FEN 
+#TODO Criar um codificador FEN
+def code_FEN(FEN):
+    formated_FEN = ""
+    spaces = 0
+    for char in FEN:
+        if char == "0":
+            spaces += 1
+        elif char.isletter():
+            if spaces > 0: formated_FEN.append(str(spaces))
+            formated_FEN += char
+            spaces = 0
+        else: # If it's a new row, that is '/'
+            spaces = 0
+
+
 
 class Board:
     def __init__(self):

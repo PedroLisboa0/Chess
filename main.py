@@ -14,7 +14,8 @@ pygame.display.set_caption("Chess by Pedro Lisboa")
 clock = pygame.time.Clock()
 running = True
 
-starting_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+starting_position = "rnbqkbnr/ppppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+current_position = starting_position
 board_setup = starting_position
 
 board = Board()
@@ -77,12 +78,21 @@ while running:
     # Renders the board
     board.draw_board(screen=screen)
 
-    # Renders the pieces
+    # Renders the pieces and codes the new FEN
+    new_FEN = ""
     for row in board.squares:
         for square in row:
             if square.piece_on is not None:
                 screen.blit(source=square.piece_on.surf, dest=(square.piece_on.x * board.square_len,
                                                                square.piece_on.y * board.square_len))
+                new_FEN += square.piece_on.fen_notation
+            else:
+                new_FEN += "0"      
+        new_FEN += "/"
+
+if new_FEN is not current_position:
+    current_position = new_FEN
+    print(current_position)
 
     # Updates the screen
     pygame.display.flip()
