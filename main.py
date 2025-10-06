@@ -1,5 +1,5 @@
 import pygame
-from board import Board
+from board import Board, format_FEN
 from game import Game, check_capture, change_turn
 from saver import Saver
 
@@ -13,6 +13,8 @@ pygame.display.set_caption("Chess by Pedro Lisboa")
 
 clock = pygame.time.Clock()
 running = True
+
+local = True # TODO Reverses the board each move
 
 starting_position = "rnbqkbnr/ppppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 current_position = starting_position
@@ -30,6 +32,8 @@ mode = "select"
 turn = "white"
 
 saver = Saver(file="games.txt")
+saver.create_game()
+saver.save(starting_position)
 
 def update_legal_moves():
     for piece in board.all_pieces:
@@ -46,6 +50,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+        elif event.type == pygame.KEYDOWN:
+            match event.key:
+                case pygame.K_r:
+                    print(current_position)
+
         # Moves the pieces (or tries to lol)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_position = pygame.mouse.get_pos()
@@ -87,12 +97,12 @@ while running:
                                                                square.piece_on.y * board.square_len))
                 new_FEN += square.piece_on.fen_notation
             else:
-                new_FEN += "0"      
+                new_FEN += "0"
         new_FEN += "/"
 
-if new_FEN is not current_position:
-    current_position = new_FEN
-    print(current_position)
+    if current_position != new_FEN:
+        current_position = new_FEN
+        saver.save(format_FEN(current_position))
 
     # Updates the screen
     pygame.display.flip()

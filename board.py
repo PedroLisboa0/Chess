@@ -11,7 +11,7 @@ black_squares_color = purple
 high_white_squares = high_white
 high_black_squares = high_purple
 
-def format_FEN(FEN): # Transforms FEN notation into a nested list, adding a 0 for empty squares.
+def code_FEN(FEN): # Transforms FEN notation into a nested list, adding a 0 for empty squares.
 
     FEN_rows = ""
 
@@ -27,19 +27,23 @@ def format_FEN(FEN): # Transforms FEN notation into a nested list, adding a 0 fo
 
     return new_FEN
 
-#TODO Criar um codificador FEN
-def code_FEN(FEN):
+def format_FEN(FEN): # Retransforms the coded FEN back into standard notation.
     formated_FEN = ""
     spaces = 0
     for char in FEN:
         if char == "0":
             spaces += 1
-        elif char.isletter():
-            if spaces > 0: formated_FEN.append(str(spaces))
+        elif char == "/":
+            if spaces > 0: formated_FEN += str(spaces)
+            spaces = 0
+            formated_FEN += "/"
+        elif char.isalpha():
+            if spaces > 0: formated_FEN += str(spaces)
             formated_FEN += char
             spaces = 0
-        else: # If it's a new row, that is '/'
-            spaces = 0
+
+    return formated_FEN
+            
 
 
 
@@ -73,7 +77,7 @@ class Board:
             piece.surf = pygame.transform.scale(piece.surf, (self.square_len, self.square_len))
 
     def create_pieces(self, position):
-        FEN = format_FEN(position)
+        FEN = code_FEN(position)
 
         for y, row in enumerate(FEN):
             for x, char in enumerate(row):
