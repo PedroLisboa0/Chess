@@ -1,6 +1,6 @@
 import pygame
 from board import Board, format_FEN
-from game import Game, check_capture, change_turn
+from game import Game, check_capture
 from saver import Saver
 
 pygame.init()
@@ -25,11 +25,8 @@ board.create_squares()
 board.create_pieces(board_setup)
 board.update_squares()
 
-game = Game()
-selected_piece = None
-selected_square = None
-mode = "select"
-turn = "white"
+game = Game(turn="white")
+game.mode = "select"
 
 saver = Saver(file="games.txt")
 saver.create_game()
@@ -40,7 +37,39 @@ def update_legal_moves():
         game.get_moves(piece=piece, squares=board.get_squares())
     # Limits the king so it cannot enter check
     # TODO vou ter que fazer uma "simulação" da posição caso tal lance aconteça mesmo. Acho inclusive que o melhor
-    # TODO é fazer um novo arquivo e classe Simulator
+    # TODO é fazer um novo arquivo e classe Simulators
+
+
+
+def handle_click(mouse_position):
+    for square in board.get_squares():
+            if square.rect.collidepoint(mouse_position) == False:
+                continue
+
+            if square.piece_on == None:
+                game.mode = "select"
+                board.update_highlight(reset=True)
+                continue
+
+            if game.mode == "select" and square.piece_on.moves != []:
+                game.selected_square = square
+                game.selected_piece = square.piece_on
+                if game.selected_piece.color == game.turn:
+                    for possible_square in game.selected_piece.moves:
+                        possible_square.highlight = True
+                    board.update_highlight
+                    game.mode = "move"
+                continue
+
+            if game.mode == "move" and square in game.selected_piece.moves:
+                check_capture(new_square=square, pieces=board.all_pieces,
+                    white_pieces=board.white_pieces, black_pieces=board.black_pieces)
+                game.move_piece(square)
+                game.change_turn()
+                board.update_highlight(reset=True)
+                update_legal_moves()
+                game.mode = "select"
+                
 
 
 update_legal_moves()
@@ -54,36 +83,16 @@ while running:
         elif event.type == pygame.KEYDOWN:
             match event.key:
                 case pygame.K_r:
-                    print(current_position)
+                    print("Mode", game.mode)
+                    print("Turn", game.turn)
+                    print("s-square", game.selected_square)
+                    print("s-piece", game.selected_piece)
 
         # Moves the pieces (or tries to lol)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_position = pygame.mouse.get_pos()
+            handle_click(mouse_position)
 
-            for row in board.squares:
-                for square in row:
-
-                    if (square.rect.collidepoint(mouse_position) and square.piece_on is not None
-                            and mode == "select" and square.piece_on.moves != []):
-                        selected_square = square
-                        selected_piece = square.piece_on
-                        if selected_piece.color == turn:
-                            # Highlights all possible squares
-                            for possible_square in selected_piece.moves:
-                                possible_square.highlight = True
-                                possible_square.current_color = possible_square.high_color
-                            mode = "move"
-
-                    elif square.rect.collidepoint(mouse_position) and mode == "move" and square in selected_piece.moves:
-                        check_capture(new_square=square, pieces=board.all_pieces,
-                                      white_pieces=board.white_pieces, black_pieces=board.black_pieces)
-                        selected_piece.update_position(square.pos)
-                        square.piece_on = selected_piece
-                        selected_square.piece_on = None
-                        turn = change_turn(turn)
-                        board.reset_highlight()
-                        update_legal_moves()
-                        mode = "select"
 
     # Renders the board
     board.draw_board(screen=screen)

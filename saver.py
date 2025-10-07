@@ -6,11 +6,12 @@ class Saver:
         
     def save(self, position: str):
         with open(self.file, "a") as file:
-            file.write(position[:-1])
+            file.write(position[:-1]+"\n")
 
     def create_game(self):
         with open(self.file, "a") as file:
             current_datetime = datetime.datetime.now()
+            file.write("\n")
             file.write(str(current_datetime)[:16]+"\n")
 
 

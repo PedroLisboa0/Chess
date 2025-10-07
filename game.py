@@ -8,14 +8,6 @@ def check_capture(new_square, pieces, white_pieces, black_pieces):
                 case "black": black_pieces.remove(piece)
 
 
-def change_turn(current_turn):
-    if current_turn == "white":
-        current_turn = "black"
-    else:
-        current_turn = "white"
-    return current_turn
-
-
 def get_bishop_moves(possible_square, current_square):
     legal_bishop_moves = []
     if possible_square.default_color == current_square.default_color:
@@ -44,19 +36,15 @@ def to_notation(position):
     notation = alphabet[position[0]] + str(9 - (position[1] + 1))
     return notation
 
-
-def get_enemy_color(color):
-    if color == "white":
-        enemy_color = "black"
-    else:
-        enemy_color = "white"
-    return enemy_color
-
-
 class Game:
-    def __init__(self):
+    def __init__(self, turn):
         self.possible_moves = []
         self.move_counter = 0
+        self.turn = turn
+        self.mode = "select"
+        self.selected_piece = None
+        self.selected_square = None
+
 
     def get_moves(self, piece, squares):
         square_index = 0
@@ -139,6 +127,16 @@ class Game:
                     else:
                         self.possible_moves.append(possible_square)
         piece.moves = self.possible_moves
+
+
+    def change_turn(self):
+        self.turn = "black" if self.turn == "white" else "white"
+
+    def move_piece(self, square):
+        self.selected_piece.update_position(square.pos)
+        square.piece_on = self.selected_piece
+        self.selected_square.piece_on = None
+
 
     def simulate_position(self):
         pass
