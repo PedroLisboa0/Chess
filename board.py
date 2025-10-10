@@ -127,7 +127,7 @@ class Board:
 
     def update_highlight(self, reset=False):
         for square in self.get_squares():
-            if reset:
+            if reset == True:
                 square.highlight = False
             square.current_color = square.high_color if square.highlight == True else square.default_color
 

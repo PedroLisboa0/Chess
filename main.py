@@ -46,22 +46,7 @@ def handle_click(mouse_position):
             if square.rect.collidepoint(mouse_position) == False:
                 continue
 
-            if square.piece_on == None:
-                game.mode = "select"
-                board.update_highlight(reset=True)
-                continue
-
-            if game.mode == "select" and square.piece_on.moves != []:
-                game.selected_square = square
-                game.selected_piece = square.piece_on
-                if game.selected_piece.color == game.turn:
-                    for possible_square in game.selected_piece.moves:
-                        possible_square.highlight = True
-                    board.update_highlight
-                    game.mode = "move"
-                continue
-
-            if game.mode == "move" and square in game.selected_piece.moves:
+            if game.mode == "move" and (square in game.selected_piece.moves):
                 check_capture(new_square=square, pieces=board.all_pieces,
                     white_pieces=board.white_pieces, black_pieces=board.black_pieces)
                 game.move_piece(square)
@@ -69,7 +54,25 @@ def handle_click(mouse_position):
                 board.update_highlight(reset=True)
                 update_legal_moves()
                 game.mode = "select"
+                return
+
+            if square.piece_on.moves != []:
+                game.selected_square = square
+                game.selected_piece = square.piece_on
+                board.update_highlight(reset=True)
+                if game.selected_piece.color == game.turn:
+                    for possible_square in game.selected_piece.moves:
+                        possible_square.highlight = True
+                    board.update_highlight()
+                    game.mode = "move"
+                return
                 
+            if square.piece_on == None:
+                game.mode = "select"
+                game.selected_square = None
+                game.selected_piece = None
+                board.update_highlight(reset=True)
+                return
 
 
 update_legal_moves()

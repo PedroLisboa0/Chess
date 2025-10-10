@@ -37,12 +37,12 @@ class Pawn(Piece):
                 self.surf = sprites.white_pawn
                 self.default_directions = piece_directions["pawn_default"]
                 self.capture_directions = piece_directions["pawn_capture"]
-                self.fen_notation = "p"
+                self.fen_notation = "P"
             case "black":
                 self.surf = sprites.black_pawn
                 self.default_directions = [x*-1 for x in piece_directions["pawn_default"]]
                 self.capture_directions = [x*-1 for x in piece_directions["pawn_capture"]]
-                self.fen_notation = "P"
+                self.fen_notation = "p"
         self.directions = self.default_directions
 
 
@@ -55,10 +55,10 @@ class Bishop(Piece):
         match self.color:
             case "white":
                 self.surf = sprites.white_bishop
-                self.fen_notation = "b"
+                self.fen_notation = "B"
             case "black":
                 self.surf = sprites.black_bishop
-                self.fen_notation = "B"
+                self.fen_notation = "b"
 
 class Knight(Piece):
     def __init__(self, x, y, color):
@@ -69,10 +69,10 @@ class Knight(Piece):
         match self.color:
             case "white":
                 self.surf = sprites.white_knight
-                self.fen_notation = "n"
+                self.fen_notation = "N"
             case "black":
                 self.surf = sprites.black_knight
-                self.fen_notation = "N"
+                self.fen_notation = "n"
 
 
 class Rook(Piece):
@@ -84,10 +84,10 @@ class Rook(Piece):
         match self.color:
             case "white":
                 self.surf = sprites.white_rook
-                self.fen_notation = "r"
+                self.fen_notation = "R"
             case "black":
                 self.surf = sprites.black_rook
-                self.fen_notation = "R"
+                self.fen_notation = "r"
 
 
 class King(Piece):
@@ -99,10 +99,10 @@ class King(Piece):
         match self.color:
             case "white":
                 self.surf = sprites.white_king
-                self.fen_notation = "k"
+                self.fen_notation = "K"
             case "black":
                 self.surf = sprites.black_king
-                self.fen_notation = "K"
+                self.fen_notation = "k"
 
 
 class Queen(Piece):
@@ -114,7 +114,7 @@ class Queen(Piece):
         match self.color:
             case "white":
                 self.surf = sprites.white_queen
-                self.fen_notation = "q"
+                self.fen_notation = "Q"
             case "black":
                 self.surf = sprites.black_queen
-                self.fen_notation = "Q"
+                self.fen_notation = "q"
