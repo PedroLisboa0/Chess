@@ -55,8 +55,8 @@ def handle_click(mouse_position):
                 update_legal_moves()
                 game.mode = "select"
                 return
-
-            if square.piece_on.moves != []:
+            
+            if square.piece_on != None:
                 game.selected_square = square
                 game.selected_piece = square.piece_on
                 board.update_highlight(reset=True)
@@ -65,7 +65,7 @@ def handle_click(mouse_position):
                         possible_square.highlight = True
                     board.update_highlight()
                     game.mode = "move"
-                return
+                return            
                 
             if square.piece_on == None:
                 game.mode = "select"
