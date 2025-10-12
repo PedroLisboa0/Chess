@@ -125,10 +125,11 @@ class Board:
                 self.flat_squares.append(square)
         return self.flat_squares
 
-    def reset_highlight(self):
+    def update_highlight(self, reset=False):
         for square in self.get_squares():
-            square.current_color = square.default_color
-            square.highlight = False
+            if reset == True:
+                square.highlight = False
+            square.current_color = square.high_color if square.highlight == True else square.default_color
 
     def get_color_pieces(self, color):
         match color:
