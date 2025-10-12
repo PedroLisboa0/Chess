@@ -53,10 +53,11 @@ def handle_click(mouse_position):
                 game.change_turn()
                 board.update_highlight(reset=True)
                 update_legal_moves()
+                game.unselect()
                 game.mode = "select"
                 return
             
-            if square.piece_on != None:
+            elif square.piece_on != None:
                 game.selected_square = square
                 game.selected_piece = square.piece_on
                 board.update_highlight(reset=True)
@@ -67,11 +68,10 @@ def handle_click(mouse_position):
                     game.mode = "move"
                 return            
                 
-            if square.piece_on == None:
-                game.mode = "select"
-                game.selected_square = None
-                game.selected_piece = None
+            elif square.piece_on == None:
+                game.unselect()
                 board.update_highlight(reset=True)
+                game.mode = "select"
                 return
 
 

@@ -132,6 +132,11 @@ class Game:
     def change_turn(self):
         self.turn = "black" if self.turn == "white" else "white"
 
+    def unselect(self):
+        self.selected_square = None
+        self.selected_piece = None
+
+
     def move_piece(self, square):
         self.selected_piece.update_position(square.pos)
         square.piece_on = self.selected_piece
